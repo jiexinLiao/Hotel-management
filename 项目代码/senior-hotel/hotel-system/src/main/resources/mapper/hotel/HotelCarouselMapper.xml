@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotel.hotel.mapper.HotelCarouselMapper">
+    
+    <resultMap type="HotelCarousel" id="HotelCarouselResult">
+        <result property="carouselId"    column="carousel_id"    />
+        <result property="name"    column="name"    />
+        <result property="introduce"    column="introduce"    />
+        <result property="imagePath"    column="image_path"    />
+        <result property="orderNum"    column="order_num"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectHotelCarouselVo">
+        select carousel_id, name, introduce, image_path, order_num, create_by, create_time, update_by, update_time from hotel_carousel
+    </sql>
+
+    <select id="selectHotelCarouselList" parameterType="HotelCarousel" resultMap="HotelCarouselResult">
+        <include refid="selectHotelCarouselVo"/>
+        <where>  
+            <if test="name != null "> and name like concat('%', #{name}, '%')</if>
+            <if test="introduce != null  and introduce != ''"> and introduce = #{introduce}</if>
+        </where>
+    </select>
+    
+    <select id="selectHotelCarouselByCarouselId" parameterType="Long" resultMap="HotelCarouselResult">
+        <include refid="selectHotelCarouselVo"/>
+        where carousel_id = #{carouselId}
+    </select>
+        
+    <insert id="insertHotelCarousel" parameterType="HotelCarousel" useGeneratedKeys="true" keyProperty="carouselId">
+        insert into hotel_carousel
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="introduce != null">introduce,</if>
+            <if test="imagePath != null and imagePath != ''">image_path,</if>
+            <if test="orderNum != null">order_num,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="introduce != null">#{introduce},</if>
+            <if test="imagePath != null and imagePath != ''">#{imagePath},</if>
+            <if test="orderNum != null">#{orderNum},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHotelCarousel" parameterType="HotelCarousel">
+        update hotel_carousel
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="introduce != null">introduce = #{introduce},</if>
+            <if test="imagePath != null and imagePath != ''">image_path = #{imagePath},</if>
+            <if test="orderNum != null">order_num = #{orderNum},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where carousel_id = #{carouselId}
+    </update>
+
+    <delete id="deleteHotelCarouselByCarouselId" parameterType="Long">
+        delete from hotel_carousel where carousel_id = #{carouselId}
+    </delete>
+
+    <delete id="deleteHotelCarouselByCarouselIds" parameterType="String">
+        delete from hotel_carousel where carousel_id in 
+        <foreach item="carouselId" collection="array" open="(" separator="," close=")">
+            #{carouselId}
+        </foreach>
+    </delete>
+</mapper>

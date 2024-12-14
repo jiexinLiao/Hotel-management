@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotel.hotel.mapper.HotelSpecialMapper">
+    
+    <resultMap type="HotelSpecial" id="HotelSpecialResult">
+        <result property="specialId"    column="special_id"    />
+        <result property="name"    column="name"    />
+        <result property="introduce"    column="introduce"    />
+        <result property="cover"    column="cover"    />
+        <result property="serviceTime"    column="service_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectHotelSpecialVo">
+        select special_id, name, introduce, cover, service_time, create_by, create_time, update_by, update_time from hotel_special
+    </sql>
+
+    <select id="selectHotelSpecialList" parameterType="HotelSpecial" resultMap="HotelSpecialResult">
+        <include refid="selectHotelSpecialVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectHotelSpecialBySpecialId" parameterType="Long" resultMap="HotelSpecialResult">
+        <include refid="selectHotelSpecialVo"/>
+        where special_id = #{specialId}
+    </select>
+        
+    <insert id="insertHotelSpecial" parameterType="HotelSpecial" useGeneratedKeys="true" keyProperty="specialId">
+        insert into hotel_special
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="introduce != null">introduce,</if>
+            <if test="cover != null">cover,</if>
+            <if test="serviceTime != null">service_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="introduce != null">#{introduce},</if>
+            <if test="cover != null">#{cover},</if>
+            <if test="serviceTime != null">#{serviceTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHotelSpecial" parameterType="HotelSpecial">
+        update hotel_special
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="introduce != null">introduce = #{introduce},</if>
+            <if test="cover != null">cover = #{cover},</if>
+            <if test="serviceTime != null">service_time = #{serviceTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where special_id = #{specialId}
+    </update>
+
+    <delete id="deleteHotelSpecialBySpecialId" parameterType="Long">
+        delete from hotel_special where special_id = #{specialId}
+    </delete>
+
+    <delete id="deleteHotelSpecialBySpecialIds" parameterType="String">
+        delete from hotel_special where special_id in 
+        <foreach item="specialId" collection="array" open="(" separator="," close=")">
+            #{specialId}
+        </foreach>
+    </delete>
+</mapper>

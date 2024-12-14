@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotel.hotel.mapper.HotelBookMapper">
+    
+    <resultMap type="HotelBook" id="HotelBookResult">
+        <result property="bookId"    column="book_id"    />
+        <result property="bookCode"    column="book_code"    />
+        <result property="roomTypeId"    column="room_type_id"    />
+        <result property="roomId"    column="room_id"    />
+        <result property="inTime"    column="in_time"    />
+        <result property="outTime"    column="out_time"    />
+        <result property="bookName"    column="book_name"    />
+        <result property="bookPhone"    column="book_phone"    />
+        <result property="bookEmail"    column="book_email"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="moveIn"    column="move_in"    />
+        <result property="moveOut"    column="move_out"    />
+        <result property="roomTypeName"    column="room_type_name"    />
+    </resultMap>
+
+    <sql id="selectHotelBookVo">
+        select book_code, book_id, move_in, move_out, room_type_id, room_id, in_time, out_time, book_name, book_phone, book_email, create_by, create_time, update_by, update_time from hotel_book
+    </sql>
+    <sql id="selectHotelBookVo2">
+        select
+            a.*,
+            b.room_type_name
+        from hotel_book a
+        left join hotel_room_type b on b.room_type_id = a.room_type_id
+
+    </sql>
+
+    <select id="selectHotelBookList" parameterType="HotelBook" resultMap="HotelBookResult">
+        <include refid="selectHotelBookVo2"/>
+        <where>  
+            <if test="roomTypeId != null "> and a.room_type_id = #{roomTypeId}</if>
+            <if test="roomId != null "> and a.room_id = #{roomId}</if>
+            <if test="params.beginInTime != null and params.beginInTime != '' and params.endInTime != null and params.endInTime != ''"> and in_time between #{params.beginInTime} and #{params.endInTime}</if>
+            <if test="params.beginOutTime != null and params.beginOutTime != '' and params.endOutTime != null and params.endOutTime != ''"> and out_time between #{params.beginOutTime} and #{params.endOutTime}</if>
+            <if test="judgeTime1 != null ">
+                and (
+                      (#{judgeTime1} &gt;= a.in_time and #{judgeTime1} &lt;= a.out_time)
+                      or (#{judgeTime2} &gt;= a.in_time and #{judgeTime2} &lt;= a.out_time)
+                       or (a.in_time &gt;= #{judgeTime1} and a.in_time &lt;= #{judgeTime2})
+                       or (a.out_time &gt;= #{judgeTime1} and a.out_time&lt;= #{judgeTime2} )
+                )
+            </if>
+            <if test="bookCode != null  and bookCode != ''"> and a.book_code like concat('%', #{bookCode}, '%')</if>
+            <if test="bookName != null  and bookName != ''"> and a.book_name like concat('%', #{bookName}, '%')</if>
+            <if test="bookPhone != null  and bookPhone != ''"> and a.book_phone like concat('%', #{bookPhone}, '%')</if>
+            <if test="bookEmail != null  and bookEmail != ''"> and a.book_email like concat('%', #{bookEmail}, '%')</if>
+            <if test="moveIn != null "> and a.move_in = #{moveIn}</if>
+            <if test="moveOut != null "> and a.move_out = #{moveOut}</if>
+        </where>
+    </select>
+    
+    <select id="selectHotelBookByBookId" parameterType="Long" resultMap="HotelBookResult">
+        <include refid="selectHotelBookVo"/>
+        where book_id = #{bookId}
+    </select>
+        
+    <insert id="insertHotelBook" parameterType="HotelBook" useGeneratedKeys="true" keyProperty="bookId">
+        insert into hotel_book
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roomTypeId != null">room_type_id,</if>
+            <if test="bookCode != null">book_code,</if>
+            <if test="roomId != null">room_id,</if>
+            <if test="inTime != null">in_time,</if>
+            <if test="outTime != null">out_time,</if>
+            <if test="bookName != null">book_name,</if>
+            <if test="bookPhone != null">book_phone,</if>
+            <if test="bookEmail != null">book_email,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roomTypeId != null">#{roomTypeId},</if>
+            <if test="bookCode != null">#{bookCode},</if>
+            <if test="roomId != null">#{roomId},</if>
+            <if test="inTime != null">#{inTime},</if>
+            <if test="outTime != null">#{outTime},</if>
+            <if test="bookName != null">#{bookName},</if>
+            <if test="bookPhone != null">#{bookPhone},</if>
+            <if test="bookEmail != null">#{bookEmail},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHotelBook" parameterType="HotelBook">
+        update hotel_book
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="roomTypeId != null">room_type_id = #{roomTypeId},</if>
+            <if test="bookCode != null">book_code = #{bookCode},</if>
+            <if test="roomId != null">room_id = #{roomId},</if>
+            <if test="inTime != null">in_time = #{inTime},</if>
+            <if test="outTime != null">out_time = #{outTime},</if>
+            <if test="bookName != null">book_name = #{bookName},</if>
+            <if test="bookPhone != null">book_phone = #{bookPhone},</if>
+            <if test="bookEmail != null">book_email = #{bookEmail},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="moveIn != null">move_in = #{moveIn},</if>
+            <if test="moveOut != null">move_out = #{moveOut},</if>
+        </trim>
+        where book_id = #{bookId}
+    </update>
+
+    <delete id="deleteHotelBookByBookId" parameterType="Long">
+        delete from hotel_book where book_id = #{bookId}
+    </delete>
+
+    <delete id="deleteHotelBookByBookIds" parameterType="String">
+        delete from hotel_book where book_id in 
+        <foreach item="bookId" collection="array" open="(" separator="," close=")">
+            #{bookId}
+        </foreach>
+    </delete>
+</mapper>

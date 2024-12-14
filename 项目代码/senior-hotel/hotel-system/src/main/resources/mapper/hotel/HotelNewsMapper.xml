@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotel.hotel.mapper.HotelNewsMapper">
+    
+    <resultMap type="HotelNews" id="HotelNewsResult">
+        <result property="newsId"    column="news_id"    />
+        <result property="title"    column="title"    />
+        <result property="detail"    column="detail"    />
+        <result property="cover"    column="cover"    />
+        <result property="orderNum"    column="order_num"    />
+        <result property="isShow"    column="is_show"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectHotelNewsVo">
+        select news_id, title, detail, cover, order_num, is_show, create_by, create_time, update_by, update_time from hotel_news
+    </sql>
+
+    <select id="selectHotelNewsList" parameterType="HotelNews" resultMap="HotelNewsResult">
+        <include refid="selectHotelNewsVo"/>
+        <where>  
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="isShow != null  and isShow != ''"> and is_show = #{isShow}</if>
+        </where>
+    </select>
+    
+    <select id="selectHotelNewsByNewsId" parameterType="Long" resultMap="HotelNewsResult">
+        <include refid="selectHotelNewsVo"/>
+        where news_id = #{newsId}
+    </select>
+        
+    <insert id="insertHotelNews" parameterType="HotelNews" useGeneratedKeys="true" keyProperty="newsId">
+        insert into hotel_news
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">title,</if>
+            <if test="detail != null">detail,</if>
+            <if test="cover != null">cover,</if>
+            <if test="orderNum != null">order_num,</if>
+            <if test="isShow != null">is_show,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">#{title},</if>
+            <if test="detail != null">#{detail},</if>
+            <if test="cover != null">#{cover},</if>
+            <if test="orderNum != null">#{orderNum},</if>
+            <if test="isShow != null">#{isShow},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHotelNews" parameterType="HotelNews">
+        update hotel_news
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="detail != null">detail = #{detail},</if>
+            <if test="cover != null">cover = #{cover},</if>
+            <if test="orderNum != null">order_num = #{orderNum},</if>
+            <if test="isShow != null">is_show = #{isShow},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where news_id = #{newsId}
+    </update>
+
+    <delete id="deleteHotelNewsByNewsId" parameterType="Long">
+        delete from hotel_news where news_id = #{newsId}
+    </delete>
+
+    <delete id="deleteHotelNewsByNewsIds" parameterType="String">
+        delete from hotel_news where news_id in 
+        <foreach item="newsId" collection="array" open="(" separator="," close=")">
+            #{newsId}
+        </foreach>
+    </delete>
+
+    <select id="selectThreeNewHotelNewsList" parameterType="HotelNews" resultMap="HotelNewsResult">
+        <include refid="selectHotelNewsVo"/>
+        order by create_time desc
+        limit 3
+    </select>
+</mapper>

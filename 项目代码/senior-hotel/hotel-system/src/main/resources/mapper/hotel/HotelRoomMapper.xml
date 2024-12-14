@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotel.hotel.mapper.HotelRoomMapper">
+    
+    <resultMap type="HotelRoom" id="HotelRoomResult">
+        <result property="roomId"    column="room_id"    />
+        <result property="roomNum"    column="room_num"    />
+        <result property="roomTypeId"    column="room_type_id"    />
+        <result property="roomPrice"    column="room_price"    />
+        <result property="roomCover"    column="room_cover"    />
+        <result property="roomIntroduce"    column="room_introduce"    />
+        <result property="roomDetail"    column="room_detail"    />
+        <result property="status"    column="status"    />
+        <result property="orderNum"    column="order_num"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="roomTypeName"    column="room_type_name"    />
+    </resultMap>
+
+    <sql id="selectHotelRoomVo">
+        select room_id, room_num, room_type_id, room_price, room_cover, room_introduce, room_detail, status, order_num, create_by, create_time, update_by, update_time from hotel_room
+    </sql>
+
+    <sql id="selectHotelRoomVo2">
+        SELECT
+            a.*,
+            b.room_type_name
+        FROM
+            hotel_room a
+            LEFT JOIN hotel_room_type b ON b.room_type_id = a.room_type_id
+    </sql>
+
+    <select id="selectHotelRoomList" parameterType="HotelRoom" resultMap="HotelRoomResult">
+        <include refid="selectHotelRoomVo2"/>
+        <where>  
+            <if test="roomNum != null "> and a.room_num like concat('%', #{roomNum}, '%')</if>
+            <if test="roomTypeId != null "> and a.room_type_id = #{roomTypeId}</if>
+            <if test="roomIntroduce != null  and roomIntroduce != ''"> and a.room_introduce like concat('%', #{roomIntroduce}, '%')</if>
+            <if test="status != null  and status != ''"> and a.status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectHotelRoomByRoomId" parameterType="Long" resultMap="HotelRoomResult">
+        <include refid="selectHotelRoomVo"/>
+        where room_id = #{roomId}
+    </select>
+        
+    <insert id="insertHotelRoom" parameterType="HotelRoom" useGeneratedKeys="true" keyProperty="roomId">
+        insert into hotel_room
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roomNum != null">room_num,</if>
+            <if test="roomTypeId != null">room_type_id,</if>
+            <if test="roomPrice != null">room_price,</if>
+            <if test="roomCover != null">room_cover,</if>
+            <if test="roomIntroduce != null">room_introduce,</if>
+            <if test="roomDetail != null">room_detail,</if>
+            <if test="status != null">status,</if>
+            <if test="orderNum != null">order_num,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roomNum != null">#{roomNum},</if>
+            <if test="roomTypeId != null">#{roomTypeId},</if>
+            <if test="roomPrice != null">#{roomPrice},</if>
+            <if test="roomCover != null">#{roomCover},</if>
+            <if test="roomIntroduce != null">#{roomIntroduce},</if>
+            <if test="roomDetail != null">#{roomDetail},</if>
+            <if test="status != null">#{status},</if>
+            <if test="orderNum != null">#{orderNum},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHotelRoom" parameterType="HotelRoom">
+        update hotel_room
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="roomNum != null">room_num = #{roomNum},</if>
+            <if test="roomTypeId != null">room_type_id = #{roomTypeId},</if>
+            <if test="roomPrice != null">room_price = #{roomPrice},</if>
+            <if test="roomCover != null">room_cover = #{roomCover},</if>
+            <if test="roomIntroduce != null">room_introduce = #{roomIntroduce},</if>
+            <if test="roomDetail != null">room_detail = #{roomDetail},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="orderNum != null">order_num = #{orderNum},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where room_id = #{roomId}
+    </update>
+
+    <delete id="deleteHotelRoomByRoomId" parameterType="Long">
+        delete from hotel_room where room_id = #{roomId}
+    </delete>
+
+    <delete id="deleteHotelRoomByRoomIds" parameterType="String">
+        delete from hotel_room where room_id in 
+        <foreach item="roomId" collection="array" open="(" separator="," close=")">
+            #{roomId}
+        </foreach>
+    </delete>
+</mapper>

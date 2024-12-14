@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotel.hotel.mapper.HotelVisitorMapper">
+    
+    <resultMap type="HotelVisitor" id="HotelVisitorResult">
+        <result property="visitorId"    column="visitor_id"    />
+        <result property="name"    column="name"    />
+        <result property="phone"    column="phone"    />
+        <result property="email"    column="email"    />
+        <result property="message"    column="message"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectHotelVisitorVo">
+        select visitor_id, name, phone, email, message, create_time from hotel_visitor
+    </sql>
+
+    <select id="selectHotelVisitorList" parameterType="HotelVisitor" resultMap="HotelVisitorResult">
+        <include refid="selectHotelVisitorVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="phone != null  and phone != ''"> and phone like concat('%', #{phone}, '%')</if>
+            <if test="email != null  and email != ''"> and email like concat('%', #{email}, '%')</if>
+            <if test="message != null  and message != ''"> and message like concat('%', #{message}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectHotelVisitorByVisitorId" parameterType="Long" resultMap="HotelVisitorResult">
+        <include refid="selectHotelVisitorVo"/>
+        where visitor_id = #{visitorId}
+    </select>
+        
+    <insert id="insertHotelVisitor" parameterType="HotelVisitor" useGeneratedKeys="true" keyProperty="visitorId">
+        insert into hotel_visitor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="phone != null">phone,</if>
+            <if test="email != null">email,</if>
+            <if test="message != null">message,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="email != null">#{email},</if>
+            <if test="message != null">#{message},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHotelVisitor" parameterType="HotelVisitor">
+        update hotel_visitor
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="message != null">message = #{message},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where visitor_id = #{visitorId}
+    </update>
+
+    <delete id="deleteHotelVisitorByVisitorId" parameterType="Long">
+        delete from hotel_visitor where visitor_id = #{visitorId}
+    </delete>
+
+    <delete id="deleteHotelVisitorByVisitorIds" parameterType="String">
+        delete from hotel_visitor where visitor_id in 
+        <foreach item="visitorId" collection="array" open="(" separator="," close=")">
+            #{visitorId}
+        </foreach>
+    </delete>
+</mapper>

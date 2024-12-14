@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>国际酒店</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Stylesheets -->
+	<!-- Dropdown Menu -->
+	<link rel="stylesheet" href="static/css/superfish.css">
+	<!-- Owl Slider -->
+	<!-- <link rel="stylesheet" href="css/owl.carousel.css"> -->
+	<!-- <link rel="stylesheet" href="css/owl.theme.default.min.css"> -->
+	<!-- Date Picker -->
+	<link rel="stylesheet" href="static/css/bootstrap-datepicker.min.css">
+	<!-- CS Select -->
+	<link rel="stylesheet" href="static/css/cs-select.css">
+	<link rel="stylesheet" href="static/css/cs-skin-border.css">
+
+	<!-- Themify Icons -->
+	<link rel="stylesheet" href="static/css/themify-icons.css">
+	<!-- Flat Icon -->
+	<link rel="stylesheet" href="static/css/flaticon.css">
+	<!-- Icomoon -->
+	<link rel="stylesheet" href="static/css/icomoon.css">
+	<!-- Flexslider  -->
+	<link rel="stylesheet" href="static/css/flexslider.css">
+	
+	<!-- Style -->
+	<link rel="stylesheet" href="static/css/style.css">
+
+	<!-- Modernizr JS -->
+	<script src="static/js/modernizr-2.6.2.min.js"></script>
+	<!-- Javascripts -->
+	<script src="static/js/jquery-2.1.4.min.js"></script>
+	<!-- vue的引入 -->
+	<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+	<!-- 自定义请求 -->
+	<script src="static/js/request.js"></script>
+	<script type="text/javascript">
+		
+		$(function() {
+			new Vue({
+				el: '#fh5co-wrapper',
+				data: {
+					roomType: {}, //新闻详情
+					roomTypeId: '',  //新闻详情id
+					headerMenus: [], // 头部菜单数组 荣誉证书，包括里面的照片集合
+					showH5Left: false, // 是否展示h5的左侧栏
+					aboutSonMenus: [], // 关于我们的三个子菜单
+					productMenu: {}, //产品一级菜单
+					products: [], //4条产品数据
+					newsList: [], //3条新闻数据
+					aboutMenuName: '', //关于菜单名
+					newsMenuName: '', //新闻菜单名
+					productMenuName: '', // 产品菜单名
+					messageMenuName: '', // 留言菜单名
+					carouselList: [], // 轮播图集合
+					types: [], // 房间类型集合
+					specials: [], // 特色集合
+				},
+				created(params) {
+					this.roomTypeId = $.getUrlParam("roomTypeId")
+					this.getHeaderMenuTree()
+					this.getRoomTypeById()
+				},
+				mounted() {
+				},
+				methods: {
+					/**
+					 * 去掉字符串的html，并且截取字符串
+					 * @param {Object} str
+					 * @param {Object} num
+					 */
+					getShortStr(str, num) {
+						if (str) {
+							str = str.replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/&nbsp;/ig, "");
+							var result = str
+							if (!num) {
+								num = 23
+							}
+							if (str.length > num) {
+								var tempStr = str.substr(0, num)
+								result = tempStr + "..."
+							}
+							return result
+						}
+						return ""
+					},
+					// 获取头部菜单数据
+					getHeaderMenuTree() {
+						var that = this
+						var url = 'hotel/front/get/menu/tree'
+						$.ax(url, null, false, "GET", "json", function succ(res) {
+							
+							that.headerMenus = res.data
+							setTimeout(function() {
+								that.initH5Menu()
+							}, 1000)
+							// 获取首页下面需要的菜单名
+							// for (var i = 0; i < that.headerMenus.length; i++) {
+							// 	var menu = that.headerMenus[i]
+							// 	if (menu.id == 26) {
+							// 		that.aboutMenuName = menu.label
+							// 	} else if (menu.id == 27) {
+							// 		that.newsMenuName = menu.label
+							// 	} else if (menu.id == 33) {
+							// 		that.productMenuName = menu.label
+							// 	} else if (menu.id == 36) {
+							// 		that.messageMenuName = menu.label
+							// 	}
+							// }
+							
+	
+						})
+					},
+					// 获取新闻详情
+					getRoomTypeById() {
+						var that = this
+						var url = 'hotel/front/get/roomType/by/id'
+						$.ax(url, {roomTypeId: this.roomTypeId}, false, "GET", "json", function succ(res) {
+							that.roomType = res.data
+						})
+					},
+					// 初始化h5的菜单数据渲染
+					initH5Menu() {
+						var $clone = $('#fh5co-menu-wrap').clone();
+						$clone.attr({
+						   'id' : 'offcanvas-menu'
+						});
+						$clone.find('> ul').attr({
+						   'class' : '',
+						   'id' : ''
+						});
+						
+						$('#fh5co-page').prepend($clone);
+						
+						// click the burger
+						$('.js-fh5co-nav-toggle').on('click', function(){
+						
+						   if ( $('body').hasClass('fh5co-offcanvas') ) {
+						      $('body').removeClass('fh5co-offcanvas');
+						      $(this).removeClass('active');
+						   } else {
+						      $('body').addClass('fh5co-offcanvas');
+						      $(this).addClass('active');
+						   }
+						   // $('body').toggleClass('fh5co-offcanvas');
+						
+						});
+						
+						$('#offcanvas-menu').css('height', $(window).height());
+						
+						$(window).resize(function(){
+						   var w = $(window);
+						
+						
+						   $('#offcanvas-menu').css('height', w.height());
+						
+						   if ( w.width() > 769 ) {
+						      if ( $('body').hasClass('fh5co-offcanvas') ) {
+						         $('body').removeClass('fh5co-offcanvas');
+						      }
+						   }
+						
+						}); 
+						
+						// 初始化点击按钮没反应
+						$(document).click(function (e) {
+						 var container = $("#offcanvas-menu, .js-fh5co-nav-toggle");
+						 if (!container.is(e.target) && container.has(e.target).length === 0) {
+						   if ( $('body').hasClass('fh5co-offcanvas') ) {
+						      $('body').removeClass('fh5co-offcanvas');
+						   }
+						 }
+						});
+					},
+				}
+			})
+		});
+	</script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+<body>
+	<div id="fh5co-wrapper">
+	<div id="fh5co-page">
+	<div id="fh5co-header">
+		<header id="fh5co-header-section">
+			<div class="container">
+				<div class="nav-header">
+					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
+					<h1 id="fh5co-logo"><a href="index.html">hotel</a></h1>
+					<nav id="fh5co-menu-wrap" role="navigation">
+						<ul class="sf-menu" id="fh5co-primary-menu">
+							<li v-for="(item,index) in headerMenus">
+								<a :class="index == 1 ? 'active' : ''" :href="item.url">{{ item.name }}</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+		
+	</div>
+	<!-- end:fh5co-header -->
+	<div v-if="headerMenus.length > 0" class="fh5co-parallax" :style="'background-image: url('+ headerMenus[1].image +');'" data-stellar-background-ratio="0.5">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 text-center fh5co-table">
+					<div class="fh5co-intro fh5co-table-cell">
+						<h1 class="text-center">{{ headerMenus[1].name }}</h1>
+						<p>{{ headerMenus[1].detail }}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="news-content container">
+		<h2>{{ roomType.roomTypeName }}</h2>
+		<p class="news-time"><i class="icon icon-calendar"></i>{{ roomType.createTime }}</p>
+		
+		<img style="width: 52%;" v-for="item in roomType.imageList"  :src="item">
+		<!-- <img src="static/picture/image-1.jpg"> -->
+		<!-- <img src="static/picture/image-1.jpg"> -->
+		<div>{{ roomType.roomTypeIntroduce }}</div>
+	</div>
+	<footer id="footer" class="fh5co-bg-color">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="copyright">
+						<p>&copy; 2016  All Rights Reserved. 
+						</p>
+						<img src="static/picture/gw.jpg">
+					</div>
+				</div>
+				<div class="col-md-8">
+					<div class="row">
+						<div class="col-md-3">
+							<h3>快速链接</h3>
+							<ul class="link">
+								<li><a href="index.html">网站首页</a></li>
+								<li><a href="#">房间介绍</a></li>
+								<li><a href="#">服务介绍</a></li>
+								<li><a href="#">新闻中心</a></li>
+								<li><a href="#">联系我们</a></li>
+							</ul>
+						</div>
+						<div class="col-md-3">
+							<h3>特色服务</h3>
+							<ul class="link">
+								<li><a>餐厅、酒吧</a></li>
+								<li><a>接送、泳池</a></li>
+								<li><a>Spa、健身</a></li>
+							</ul>
+						</div>
+						<div class="col-md-6">
+							<h3>订阅</h3>
+							<p>
+								特色服务和齐全的设施等着你的到来
+							</p>
+							<form action="#" id="form-subscribe">
+								<div class="form-field">
+									<input type="email" placeholder="邮箱" id="email">
+									<input type="submit" id="submit" value="发送">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</footer>
+
+	</div>
+	<!-- END fh5co-page -->
+	
+	</div>
+	<!-- END fh5co-wrapper -->
+	
+	<!-- Javascripts -->
+	<script src="static/js/jquery-2.1.4.min.js"></script>
+	<!-- Dropdown Menu -->
+	<script src="static/js/hoverIntent.js"></script>
+	<script src="static/js/superfish.js"></script>
+	<!-- Bootstrap -->
+	<script src="static/js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="static/js/jquery.waypoints.min.js"></script>
+	<!-- Counters -->
+	<script src="static/js/jquery.countTo.js"></script>
+	<!-- Stellar Parallax -->
+	<script src="static/js/jquery.stellar.min.js"></script>
+	<!-- Owl Slider -->
+	<!-- // <script src="js/owl.carousel.min.js"></script> -->
+	<!-- Date Picker -->
+	<script src="static/js/bootstrap-datepicker.min.js"></script>
+	<!-- CS Select -->
+	<script src="static/js/classie.js"></script>
+	<script src="static/js/selectFx.js"></script>
+	<!-- Flexslider -->
+	<script src="static/js/jquery.flexslider-min.js"></script>
+
+	<script src="static/js/custom.js"></script>
+
+</body>
+</html>

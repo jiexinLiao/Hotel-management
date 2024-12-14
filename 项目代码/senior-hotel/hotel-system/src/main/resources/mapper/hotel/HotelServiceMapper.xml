@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotel.hotel.mapper.HotelServiceMapper">
+    
+    <resultMap type="HotelService" id="HotelServiceResult">
+        <result property="serviceId"    column="service_id"    />
+        <result property="name"    column="name"    />
+        <result property="introduce"    column="introduce"    />
+        <result property="icon"    column="icon"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectHotelServiceVo">
+        select service_id, name, introduce, icon, create_by, create_time, update_by, update_time from hotel_service
+    </sql>
+
+    <select id="selectHotelServiceList" parameterType="HotelService" resultMap="HotelServiceResult">
+        <include refid="selectHotelServiceVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="introduce != null  and introduce != ''"> and introduce like concat('%', #{introduce}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectHotelServiceByServiceId" parameterType="Long" resultMap="HotelServiceResult">
+        <include refid="selectHotelServiceVo"/>
+        where service_id = #{serviceId}
+    </select>
+        
+    <insert id="insertHotelService" parameterType="HotelService" useGeneratedKeys="true" keyProperty="serviceId">
+        insert into hotel_service
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="introduce != null">introduce,</if>
+            <if test="icon != null">icon,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="introduce != null">#{introduce},</if>
+            <if test="icon != null">#{icon},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHotelService" parameterType="HotelService">
+        update hotel_service
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="introduce != null">introduce = #{introduce},</if>
+            <if test="icon != null">icon = #{icon},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where service_id = #{serviceId}
+    </update>
+
+    <delete id="deleteHotelServiceByServiceId" parameterType="Long">
+        delete from hotel_service where service_id = #{serviceId}
+    </delete>
+
+    <delete id="deleteHotelServiceByServiceIds" parameterType="String">
+        delete from hotel_service where service_id in 
+        <foreach item="serviceId" collection="array" open="(" separator="," close=")">
+            #{serviceId}
+        </foreach>
+    </delete>
+</mapper>

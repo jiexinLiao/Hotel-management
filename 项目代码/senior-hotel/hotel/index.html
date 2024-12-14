@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+	
+	<!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>度假酒店</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="author" content="order by www.adminbuy.cn">
+		<!-- Stylesheets -->
+		<!-- Dropdown Menu -->
+		<link rel="stylesheet" href="static/css/superfish.css">
+		<!-- Owl Slider -->
+		<!-- <link rel="stylesheet" href="css/owl.carousel.css"> -->
+		<!-- <link rel="stylesheet" href="css/owl.theme.default.min.css"> -->
+		<!-- Date Picker -->
+		<link rel="stylesheet" href="static/css/bootstrap-datepicker.min.css">
+		<!-- CS Select -->
+		<link rel="stylesheet" href="static/css/cs-select.css">
+		<link rel="stylesheet" href="static/css/cs-skin-border.css">
+
+		<!-- Themify Icons -->
+		<link rel="stylesheet" href="static/css/themify-icons.css">
+		<!-- Flat Icon -->
+		<link rel="stylesheet" href="static/css/flaticon.css">
+		<!-- Icomoon -->
+		<link rel="stylesheet" href="static/css/icomoon.css">
+		<!-- Flexslider  -->
+		<link rel="stylesheet" href="static/css/flexslider.css">
+
+		<!-- Style -->
+		<link rel="stylesheet" href="static/css/style.css">
+
+		<!-- Modernizr JS -->
+		<script src="static/js/modernizr-2.6.2.min.js"></script>
+		
+		<!-- FOR IE9 below -->
+		<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body>
+		
+		<div id="fh5co-wrapper">
+			<div id="fh5co-page">
+				<div id="fh5co-header">
+					<header id="fh5co-header-section">
+						<div class="container">
+							<div class="nav-header"> <a href="#"
+									class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
+								<h1 id="fh5co-logo"><a href="">hotel</a></h1>
+								<nav id="fh5co-menu-wrap" role="navigation">
+									<ul class="sf-menu" id="fh5co-primary-menu">
+										<li v-for="(item,index) in headerMenus">
+											<a :class="index == 0 ? 'active' : ''" :href="item.url">{{ item.name }}</a>
+										</li>
+										<!-- <li><a class='active' href="hotel.html">首页</a></li>
+										<li><a href="hotel.html">房间介绍</a></li>
+										<li><a href="services.html">服务介绍</a></li>
+										<li><a href="blog.html">新闻中心</a></li>
+										<li><a href="contact.html">联系我们</a></li> -->
+									</ul>
+								</nav>
+							</div>
+						</div>
+					</header>
+				</div>
+				
+				<!-- end:fh5co-header -->
+				<aside id="fh5co-hero" class="js-fullheight">
+					<div class="flexslider js-fullheight">
+						<ul class="slides">
+							
+							<li v-for="(item,index) in carouselList" :style="'background-image: url('+ item.imagePath +');'">
+								<div class="overlay-gradient"></div> 
+								<div class="container">
+									<div class="col-md-12 col-md-offset-0 text-center slider-text">
+										<div class="slider-text-inner js-fullheight">
+											<div class="desc">
+												<p><span>{{ item.name }}</span></p>
+												<h2>{{ item.introduce }}</h2>
+												<!-- <p> <a href="javascript:void(0);"  class="btn btn-primary btn-lg" >立刻预定</a> </p> -->
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							
+							<!-- 
+							<li style="background-image: url(static/image/slider1.jpg);">
+								<div class="overlay-gradient"></div>
+								<div class="container">
+									<div class="col-md-12 col-md-offset-0 text-center slider-text">
+										<div class="slider-text-inner js-fullheight">
+											<div class="desc">
+												<p><span>家庭套餐</span></p>
+												<h2>享受家人美好时光</h2>
+												<p> <a href="#" class="btn btn-primary btn-lg">立刻预定</a> </p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li style="background-image: url(static/image/slider2.jpg);">
+								<div class="overlay-gradient"></div>
+								<div class="container">
+									<div class="col-md-12 col-md-offset-0 text-center slider-text">
+										<div class="slider-text-inner js-fullheight">
+											<div class="desc">
+												<p><span>精品单间</span></p>
+												<h2>让你的旅途更舒适</h2>
+												<p> <a href="#" class="btn btn-primary btn-lg">立刻预定</a> </p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</li> -->
+							<!-- <li style="background-image: url(static/image/slider3.jpg);">
+								<div class="overlay-gradient"></div>
+								<div class="container">
+									<div class="col-md-12 col-md-offset-0 text-center slider-text">
+										<div class="slider-text-inner js-fullheight">
+											<div class="desc">
+												<p><span>情侣套房</span></p>
+												<h2>享受美好双人世界</h2>
+												<p> <a href="#" class="btn btn-primary btn-lg">立刻预定</a> </p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</li> -->
+						</ul>
+					</div>
+				</aside>
+				<div class="wrap">
+					<div class="container">
+						<div class="row">
+							<div id="availability">
+								<form action="#">
+									<div class="a-col">
+										<section>
+											<select id="room-type" class="cs-select cs-skin-border">
+												<option value="999" selected="">选择房间</option>
+												<option v-for="(item, index) in types"  :value="item.roomTypeId">
+													{{ item.roomTypeName }}
+												</option>
+												<!-- <option value="">商务单人大床房</option>
+												<option value="">商务双人标准间</option>
+												<option value="">精品家庭套间</option>
+												<option value="">温馨情侣套间</option> -->
+											</select>
+										</section>
+									</div>
+									<div class="a-col alternate">
+										<div class="input-field">
+											<label for="date-start">入住时间</label>
+											<input type="text" class="form-control" id="date-start">
+										</div>
+									</div>
+									<div class="a-col alternate">
+										<div class="input-field">
+											<label for="date-end">离开时间</label>
+											<input type="text" class="form-control" id="date-end">
+										</div>
+									</div>
+									<div class="a-col action"> <a href="#" @click="bookDialog">检查空房 </a> </div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="fh5co-counter-section" class="fh5co-counters">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-3 text-center"> <span class="fh5co-counter js-counter" data-from="0"
+									data-to="20356" data-speed="2000" data-refresh-interval="50"></span> <span
+									class="fh5co-counter-label">登记入住次数</span> </div>
+							<div class="col-md-3 text-center"> <span class="fh5co-counter js-counter" data-from="0"
+									data-to="40300" data-speed="2000" data-refresh-interval="50"></span> <span
+									class="fh5co-counter-label">服务客户</span> </div>
+							<div class="col-md-3 text-center"> <span class="fh5co-counter js-counter" data-from="0"
+									data-to="8200" data-speed="2000" data-refresh-interval="50"></span> <span
+									class="fh5co-counter-label">交易</span> </div>
+							<div class="col-md-3 text-center"> <span class="fh5co-counter js-counter" data-from="0"
+									data-to="8763" data-speed="2000" data-refresh-interval="50"></span> <span
+									class="fh5co-counter-label">在线预订</span> </div>
+						</div>
+					</div>
+				</div>
+				
+				<div id="featured-hotel" class="fh5co-bg-color">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="section-title text-center">
+									<h2>精品套餐</h2>
+								</div>
+							</div>
+						</div>
+						<div class="row" v-if="types.length > 0">
+							<div class="feature-full-1col">
+								<div class="image" :style="'background-image: url('+ types[0].cover +');'">
+									<div class="descrip text-center">
+										<p><small>价钱</small><span>￥{{ types[0].price }}/天</span></p>
+									</div>
+								</div>
+								<div class="desc">
+									<h3>{{ types[0].roomTypeName }}</h3>
+									<p>{{ types[0].roomTypeIntroduce }}</p>
+									<p><a :href="'hotel-detail.html?roomTypeId=' + types[0].roomTypeId" class="btn btn-primary btn-luxe-primary">详情<i
+												class="ti-angle-right"></i></a></p>
+								</div>
+							</div>
+							<div class="feature-full-2col">
+								<div v-for="(item,index) in types" v-if="index != 0 && index != types.length-1" class="f-hotel">
+									<div class="image" :style="'background-image: url('+ item.cover +');'">
+										<div class="descrip text-center">
+											<p><small>价钱</small><span>￥{{ item.price }}/天</span></p>
+										</div>
+									</div>
+									<div class="desc">
+										<h3>{{ item.roomTypeName }}</h3>
+										<p>{{ item.roomTypeIntroduce }}</p>
+										<p><a :href="'hotel-detail.html?roomTypeId=' + item.roomTypeId" class="btn btn-primary btn-luxe-primary">详情 <i
+													class="ti-angle-right"></i></a></p>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="hotel-facilities" v-if="specials.length > 0">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="section-title text-center">
+									<h2>酒店特色</h2>
+								</div>
+							</div>
+						</div>
+						<div id="tabs">
+							<nav class="tabs-nav">
+								<a v-for="(item, index) in specials" href="#" :class="index == 0 ? 'active' : ''" :data-tab="'tab' + (index + 1)">
+								    <!-- <i class="flaticon-restaurant icon"></i> -->
+								    <span>{{ item.name }}</span>
+								</a>
+							    
+								
+							</nav>
+							<div class="tab-content-container">
+								<div v-for="(item,index) in specials" :class="index == 0 ? 'tab-content active show' : 'tab-content'" :data-tab-content="'tab' + (index + 1)">
+									<div class="container">
+										<div class="row">
+											<div class="col-md-6"> 
+												<img :src="item.cover" class="img-responsive" alt="Image"> 
+											</div>
+											<div class="col-md-6"> 
+												<span class="super-heading-sm">WORLD ClASS</span>
+												<h3 class="heading">{{ item.name }}</h3>
+												<div v-html="item.introduce"></div>
+												<p class="service-hour"> 
+													<span>服务时间</span>
+													<strong>{{ item.serviceTime }}</strong> 
+												</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- <div class="tab-content active show" data-tab-content="tab1">
+									<div class="container">
+										<div class="row">
+											<div class="col-md-6"> <img src="static/picture/tab_img_1.jpg"
+													class="img-responsive" alt="Image"> </div>
+											<div class="col-md-6"> <span class="super-heading-sm">WORLD ClASS</span>
+												<h3 class="heading">餐厅</h3>
+												<p> 这是餐厅的详细介绍这是餐厅的详细介绍这是餐厅的详细介绍这是餐厅的详细介绍这是餐厅的详细介绍
+													这是餐厅的详细介绍这是餐厅的详细介绍这是餐厅的详细介绍这是餐厅的详细介绍这是餐厅的详细介绍
+													这是餐厅的详细介绍这是餐厅的详细介绍这是餐厅的详细介绍这是餐厅的详细介绍这是餐厅的详细介绍 </p>
+												<p> 这是餐厅的详细介绍这是餐厅的详细介绍这是餐厅的详细介绍这是餐厅的详细介绍这是餐厅的详细介绍
+													这是餐厅的详细介绍这是餐厅的详细介绍这是餐厅的详细介绍这是餐厅的详细介绍这是餐厅的详细介绍
+													这是餐厅的详细介绍这是餐厅的详细介绍这是餐厅的详细介绍这是餐厅的详细介绍这是餐厅的详细介绍 </p>
+												<p class="service-hour"> <span>服务时间</span> <strong>7:30 AM - 8:00
+														PM</strong> </p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-content" data-tab-content="tab2">
+									<div class="container">
+										<div class="row">
+											<div class="col-md-6"> <img src="static/picture/tab_img_2.jpg"
+													class="img-responsive" alt="Image"> </div>
+											<div class="col-md-6"> <span class="super-heading-sm">World Class</span>
+												<h3 class="heading">酒吧</h3>
+												<p> 这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍
+													这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍
+													这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍 </p>
+												<p> 这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍
+													这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍
+													这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍 </p>
+												<p class="service-hour"> <span>服务时间</span> <strong>7:30 AM - 8:00
+														PM</strong> </p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-content" data-tab-content="tab3">
+									<div class="container">
+										<div class="row">
+											<div class="col-md-6"> <img src="static/picture/tab_img_3.jpg"
+													class="img-responsive" alt="Image"> </div>
+											<div class="col-md-6"> <span class="super-heading-sm">World Class</span>
+												<h3 class="heading">接送</h3>
+												<p> 这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍
+													这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍
+													这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍 </p>
+												<p> 这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍
+													这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍
+													这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍 </p>
+												<p class="service-hour"> <span>服务时间</span> <strong>7:30 AM - 8:00
+														PM</strong> </p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-content" data-tab-content="tab4">
+									<div class="container">
+										<div class="row">
+											<div class="col-md-6"> <img src="static/picture/tab_img_4.jpg"
+													class="img-responsive" alt="Image"> </div>
+											<div class="col-md-6"> <span class="super-heading-sm">World Class</span>
+												<h3 class="heading">泳池</h3>
+												<p> 这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍
+													这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍
+													这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍 </p>
+												<p> 这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍
+													这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍
+													这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍 </p>
+												<p class="service-hour"> <span>服务时间</span> <strong>7:30 AM - 8:00
+														PM</strong> </p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-content" data-tab-content="tab5">
+									<div class="container">
+										<div class="row">
+											<div class="col-md-6"> <img src="static/picture/tab_img_5.jpg"
+													class="img-responsive" alt="Image"> </div>
+											<div class="col-md-6"> <span class="super-heading-sm">World Class</span>
+												<h3 class="heading">Spa</h3>
+												<p> 这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍
+													这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍
+													这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍 </p>
+												<p> 这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍
+													这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍
+													这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍 </p>
+												<p class="service-hour"> <span>服务时间</span> <strong>7:30 AM - 8:00
+														PM</strong> </p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-content" data-tab-content="tab6">
+									<div class="container">
+										<div class="row">
+											<div class="col-md-6"> <img src="static/picture/tab_img_6.jpg"
+													class="img-responsive" alt="Image"> </div>
+											<div class="col-md-6"> <span class="super-heading-sm">World Class</span>
+												<h3 class="heading">健身</h3>
+												<p> 这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍
+													这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍
+													这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍 </p>
+												<p> 这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍
+													这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍
+													这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍这是关于这的详解介绍 </p>
+												<p class="service-hour"> <span>服务时间</span> <strong>7:30 AM - 8:00
+														PM</strong> </p>
+											</div>
+										</div>
+									</div>
+								</div> -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- <div id="testimonial">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="section-title text-center">
+									<h2>顾客的快乐时光</h2>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="testimony">
+									<blockquote> &ldquo;If you’re looking for a top quality hotel look no further. We
+										were upgraded free of charge to the Premium Suite, thanks so much&rdquo;
+									</blockquote>
+									<p class="author"><cite>John Doe</cite></p>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="testimony">
+									<blockquote> &ldquo;我和我的丈夫在这里有一个非常棒的周末，这里的服务很棒，服务员也很友好，乐于服务，真的好评，下次还会来的&rdquo;
+									</blockquote>
+									<p class="author"><cite>红</cite></p>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="testimony">
+									<blockquote> &ldquo;If you’re looking for a top quality hotel look no further. We
+										were upgraded free of charge to the Premium Suite, thanks so much&rdquo;
+									</blockquote>
+									<p class="author"><cite>Jane Doe</cite></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> -->
+				<div id="fh5co-blog-section" v-if="newsList.length > 0">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="section-title text-center">
+									<h2>最新资讯</h2>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div v-for="(item,index) in newsList" class="col-md-4">
+								<div class="blog-grid" :style="'background-image: url('+ item.cover +');'">
+									<div class="date text-center"> <small>{{ getNewsDate(item) }}</small> </div>
+								</div>
+								<div class="desc">
+									<h3><a :href="'blog-detail.html?newsId=' + item.newsId">{{ item.title }}</a></h3>
+								</div>
+							</div>
+							<!-- <div class="col-md-4">
+								<div class="blog-grid" style="background-image: url(static/image/image-1.jpg);">
+									<div class="date text-center"> <span>09</span> <small>8/Aug</small> </div>
+								</div>
+								<div class="desc">
+									<h3><a href="blog-detail.html">最有价值的酒店</a></h3>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="blog-grid" style="background-image: url(static/image/image-2.jpg);">
+									<div class="date text-center"> <span>09</span> <small>8/Aug</small> </div>
+								</div>
+								<div class="desc">
+									<h3><a href="blog-detail.html">酒店3周年活动</a></h3>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="blog-grid" style="background-image: url(static/image/image-3.jpg);">
+									<div class="date text-center"> <span>09</span> <small>8/Aug</small> </div>
+								</div>
+								<div class="desc">
+									<h3><a href="blog-detail.html">一个新的旅行地在这里等着你</a></h3>
+								</div>
+							</div> -->
+						</div>
+					</div>
+				</div>
+				
+				<footer id="footer" class="fh5co-bg-color">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-4">
+								<div class="copyright">
+									<p>wwe</p>
+									<img src="static/picture/gw.jpg">
+								</div>
+							</div>
+							<div class="col-md-8">
+								<div class="row">
+									<div class="col-md-3">
+										<h3>快速链接</h3>
+										<ul class="link">
+											<li><a href="">网站首页</a></li>
+											<li><a href="#">房间介绍</a></li>
+											<li><a href="#">服务介绍</a></li>
+											<li><a href="#">新闻中心</a></li>
+											<li><a href="#">联系我们</a></li>
+										</ul>
+									</div>
+									<div class="col-md-3">
+										<h3>特色服务</h3>
+										<ul class="link">
+											<li><a>餐厅、酒吧</a></li>
+											<li><a>接送、泳池</a></li>
+											<li><a>Spa、健身</a></li>
+										</ul>
+									</div>
+									<div class="col-md-6">
+										<h3>订阅</h3>
+										<p> 特色服务和齐全的设施等着你的到来 </p>
+										<form action="#" id="form-subscribe">
+											<div class="form-field">
+												<input type="email" placeholder="邮箱" id="email">
+												<input type="submit" id="submit" value="发送">
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</footer>
+				
+			</div>
+			<!-- END fh5co-page -->
+
+		</div>
+		<!-- END fh5co-wrapper -->
+
+		<!-- Javascripts -->
+		<script src="static/js/jquery-2.1.4.min.js"></script>
+		<!-- Dropdown Menu -->
+		<script src="static/js/hoverIntent.js"></script>
+		<script src="static/js/superfish.js"></script>
+		<!-- Bootstrap -->
+		<script src="static/js/bootstrap.min.js"></script>
+		<!-- Waypoints -->
+		<script src="static/js/jquery.waypoints.min.js"></script>
+		<!-- Counters -->
+		<script src="static/js/jquery.countTo.js"></script>
+		<!-- Stellar Parallax -->
+		<script src="static/js/jquery.stellar.min.js"></script>
+		<!-- Owl Slider -->
+		<!-- // <script src="js/owl.carousel.min.js"></script> -->
+		<!-- Date Picker -->
+		<script src="static/js/bootstrap-datepicker.min.js"></script>
+		<!-- CS Select -->
+		<script src="static/js/classie.js"></script>
+		<script src="static/js/selectFx.js"></script>
+		<!-- Flexslider -->
+		<script src="static/js/jquery.flexslider-min.js"></script>
+		
+		<!-- vue的引入 -->
+		<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+		<!-- 自定义请求 -->
+		<script src="static/js/request.js"></script>
+		<script type="text/javascript">
+			function joinChat(obj) {
+				var questionId=$(obj).parents(".problem1").attr("question_id");
+				var customer_user_id=$(obj).parents(".problem1").attr("user_id");
+				var customer_id=$(obj).parents(".problem1").attr("customer_id");
+				var customer_user_name=$(obj).parents(".problem1").attr("customer_code");
+				var customer_real_name = $(obj).attr("customer_name");
+				var create_channel=$(obj).parents(".problem1").attr("create_channel");
+				var customer_areaCode=$(obj).parents(".problem1").attr("area_code");
+				var questionSkillId=$(obj).attr("skill");
+				var questionLogo = $(obj).attr("question_logo");
+				var data={
+						eventType:"questionCompetition",
+						customerUserId:customer_user_id,  // 上单那个人的id
+						customerRealName: customer_real_name, // 上单人中文名字
+						customerUserName: customer_user_name, // 上单那个人工号，拼音缩写（不确定是支撑人员的缩写还是上单人的）
+						customerAreaCode:customer_areaCode,   // 
+						questionId:questionId,  // 问题id
+						questionSkillId:questionSkillId,   // 这个默认是550，不知道代表什么意思
+						createChannel:create_channel,   // 这个默认是W，不知道代表什么意思
+						questionLogo:questionLogo      // 不知道值，也不知道拿来干啥的，下次页面接单，打印出来看看
+					}
+					console.log(data)
+			}
+			// 预订的方法
+			function bookRoom() {
+				var data = $('#bookForm').serialize()
+				
+				var typeId = $('input[name=typeId]').val();// 房间类型id
+				var inTime = $('input[name=inTime]').val();// 入住时间
+				var outTime = $('input[name=outTime]').val();// 离开时间
+				var bookName = $('input[name=bookName]').val();// 预约人
+				var bookPhone = $('input[name=bookPhone]').val();// 预约电话
+				var bookEmail = $('input[name=bookEmail]').val();// 预约邮箱
+				
+				var data = {
+					roomTypeId: typeId,
+					inTime: inTime,
+					outTime: outTime,
+					bookName: bookName,
+					bookPhone: bookPhone,
+					bookEmail: bookEmail
+				}
+				
+				var that = this
+				var url = 'hotel/front/book'
+				$.axpostbyjson(url, data, function succ(res) {
+					that.alert(res.msg)
+				})
+			}
+			$(function() {
+				new Vue({
+					el: '#fh5co-wrapper',
+					data: {
+						headerMenus: [], // 头部菜单数组 荣誉证书，包括里面的照片集合
+						showH5Left: false, // 是否展示h5的左侧栏
+						aboutSonMenus: [], // 关于我们的三个子菜单
+						productMenu: {}, //产品一级菜单
+						products: [], //4条产品数据
+						newsList: [], //3条新闻数据
+						aboutMenuName: '', //关于菜单名
+						newsMenuName: '', //新闻菜单名
+						productMenuName: '', // 产品菜单名
+						messageMenuName: '', // 留言菜单名
+						carouselList: [], // 轮播图集合
+						types: [], // 房间类型集合
+						specials: [], // 特色集合
+					},
+					created() {
+						this.getHeaderMenuTree()
+						this.getIndexData()
+					},
+					mounted() {
+					},
+					methods: {
+						// 打开预定酒店弹窗
+						bookDialog() {
+							var that = this
+							// 房间类型
+							var roomTypeId = $("#room-type").val()
+							// 入住时间
+							var inTime = $("#date-start").val()
+							inTime = inTime.substr(6, 10) + '-' +inTime.substr(0, 2) + '-' + inTime.substr(3, 2) 
+							// 离开时间
+							var outTime = $("#date-end").val()
+							outTime = outTime.substr(6, 10) + '-' +outTime.substr(0, 2) + '-' + outTime.substr(3, 2) 
+							
+							// 判断当前选择时间段的房型是否还有房
+							var url = 'hotel/front/hasRoom'
+							var data = {
+								roomTypeId: roomTypeId,
+								inTime: inTime,
+								outTime: outTime
+							}
+							$.axpostbyjson(url, data, function succ(res) {
+								console.log(res)
+								console.log(res.data)
+								if(!res.data) {
+									this.alert(res.msg)
+									// 不打开弹窗
+									return false
+								}else {
+									var roomTypeNme = ''
+									for (var i = 0; i < that.types.length; i++) {
+										var roomType = that.types[i]
+										if(roomTypeId == roomType.roomTypeId) {
+											roomTypeNme = roomType.roomTypeName
+										}
+										
+									}
+									var html = '<div class="col-md-12"><div class="row"><div class="col-md-12"><div class="form-group"><input type="hidden"class="form-control"name="typeId"value="'+ roomTypeId +'"><input type="text"class="form-control"name="typeName"value="'+ roomTypeNme +'"></div></div><div class="col-md-12"><div class="form-group"><input type="hidden"class="form-control"name="inTime"value="'+ inTime +'"><input type="hidden"class="form-control"name="outTime"value="'+ outTime +'"><input type="text"class="form-control"value="'+ inTime +' ~ '+ outTime +'"></div></div><div class="col-md-12"><div class="form-group"><input type="text"class="form-control"name="bookName"placeholder="请输入姓名"></div></div><div class="col-md-12"><div class="form-group"><input type="text"class="form-control"name="bookPhone"placeholder="请输入手机"></div></div><div class="col-md-12"><div class="form-group"><input type="text"class="form-control"name="bookEmail"placeholder="请输入邮箱"></div></div><div class="col-md-12"><div class="form-group"><input type="submit"value="确定预订"onclick="bookRoom()"class="btn btn-primary"></div></div></div></div>'
+									Dialog({
+									    title: "预约",
+										closable: true,                 // 显示右上角关闭图标
+									    content: html, // 可以传入html
+									    width: 900,
+										//showTitle: false,
+										showButton: false,               // 显示按钮
+										ok: {
+											text: "预订",                // 确定按钮的文字
+											loading: false,             // 点击确定按钮时，是否显示 loading 效果（此时将不会执行关闭对话框的操作）
+											loadingText: "正在提交",         // 显示 loading 效果时，确定按钮文字的变化
+											notClose: false,            // 点击确定按钮是否关闭对话框
+											callback: function () {
+												console.log("预订回调")
+											}    // 点击确定按钮的回调函数
+										},
+										cancel: {
+											text: "取消",                // 取消按钮的文字
+											show: true,                 // 是否显示取消按钮
+											callback: function () {
+												console.log("取消了")
+											}    // 点击取消按钮的回调函数
+										},
+									});
+								}
+							})
+						},
+						// 获取新闻创建时间得日期
+						getNewsDate(item) {
+							return item.createTime.substr(5, 6).replace("-", "/")
+						},
+						// 获取头部菜单数据
+						getHeaderMenuTree() {
+							var that = this
+							var url = 'hotel/front/get/menu/tree'
+							$.ax(url, null, false, "GET", "json", function succ(res) {
+								
+								that.headerMenus = res.data
+								setTimeout(function() {
+									that.initH5Menu()
+								}, 1000)
+								// 获取首页下面需要的菜单名
+								// for (var i = 0; i < that.headerMenus.length; i++) {
+								// 	var menu = that.headerMenus[i]
+								// 	if (menu.id == 26) {
+								// 		that.aboutMenuName = menu.label
+								// 	} else if (menu.id == 27) {
+								// 		that.newsMenuName = menu.label
+								// 	} else if (menu.id == 33) {
+								// 		that.productMenuName = menu.label
+								// 	} else if (menu.id == 36) {
+								// 		that.messageMenuName = menu.label
+								// 	}
+								// }
+								
+
+							})
+						},
+						// 获取首页除了头部菜单的数据 1、轮播图数据 2、房间类型数据 3、酒店特色数据 4、资讯新闻数据
+						getIndexData() {
+							var that = this
+							var url = 'hotel/front/get/index/data'
+							$.ax(url, null, false, "GET", "json", function succ(res) {
+								that.carouselList = res.carousels
+								that.types = res.types
+								that.specials = res.specials
+								that.newsList = res.newsList
+								setTimeout(function(){
+									//初始化轮播图
+									that.initFlexSlider()
+									// 初始化下拉框选项
+									that.initSelectOptions()
+									// 初始化酒店特色得tab切换
+									that.initTabs()
+								}, 1000)
+								
+
+							})
+						},
+						// 初始化酒店特色得tab切换
+						initTabs() {
+							$('#hotel-facilities').css('height', $('.tab-content.active').height() + 600);
+							
+							$(window).resize(function(){
+							   $('#hotel-facilities').css('height', $('.tab-content.active').height() + 600);
+							});
+							
+							$('.tabs-nav > a').on('click', function(e){
+							   
+							   var tab = $(this).data('tab');
+							
+							   $('.tabs-nav > a').removeClass('active');
+							   $(this).addClass('active');
+							
+							   $('.tab-content').removeClass('active show');
+							   
+							   setTimeout(function(){
+							      $('.tab-content[data-tab-content="'+tab+'"]').addClass('active');
+							      $('#hotel-facilities').css('height', $('.tab-content.active').height() + 600);
+							   }, 200);
+							   setTimeout(function(){
+							      $('.tab-content[data-tab-content="'+tab+'"]').addClass('show');
+							   }, 400);
+							   
+							
+							   e.preventDefault();
+							});
+						},
+						// 初始化下拉框选项
+						initSelectOptions() {
+							[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {
+							   new SelectFx(el);
+							} );
+						},
+						// 初始化h5的菜单数据渲染
+						initH5Menu() {
+							var $clone = $('#fh5co-menu-wrap').clone();
+							$clone.attr({
+							   'id' : 'offcanvas-menu'
+							});
+							$clone.find('> ul').attr({
+							   'class' : '',
+							   'id' : ''
+							});
+							
+							$('#fh5co-page').prepend($clone);
+							
+							// click the burger
+							$('.js-fh5co-nav-toggle').on('click', function(){
+							
+							   if ( $('body').hasClass('fh5co-offcanvas') ) {
+							      $('body').removeClass('fh5co-offcanvas');
+							      $(this).removeClass('active');
+							   } else {
+							      $('body').addClass('fh5co-offcanvas');
+							      $(this).addClass('active');
+							   }
+							   // $('body').toggleClass('fh5co-offcanvas');
+							
+							});
+							
+							$('#offcanvas-menu').css('height', $(window).height());
+							
+							$(window).resize(function(){
+							   var w = $(window);
+							
+							
+							   $('#offcanvas-menu').css('height', w.height());
+							
+							   if ( w.width() > 769 ) {
+							      if ( $('body').hasClass('fh5co-offcanvas') ) {
+							         $('body').removeClass('fh5co-offcanvas');
+							      }
+							   }
+							
+							}); 
+							
+							// 初始化点击按钮没反应
+							$(document).click(function (e) {
+							 var container = $("#offcanvas-menu, .js-fh5co-nav-toggle");
+							 if (!container.is(e.target) && container.has(e.target).length === 0) {
+							   if ( $('body').hasClass('fh5co-offcanvas') ) {
+							      $('body').removeClass('fh5co-offcanvas');
+							   }
+							 }
+							});
+						},
+						// 初始化轮播图组件
+						initFlexSlider() {
+							$('#fh5co-hero .flexslider').flexslider({
+							   animation: "fade",
+							   slideshowSpeed: 5000,
+							   directionNav: true,
+							   start: function(){
+							      setTimeout(function(){
+							         $('.slider-text').removeClass('animated fadeInUp');
+							         $('.flex-active-slide').find('.slider-text').addClass('animated fadeInUp');
+							      }, 500);
+							   },
+							   before: function(){
+							      setTimeout(function(){
+							         $('.slider-text').removeClass('animated fadeInUp');
+							         $('.flex-active-slide').find('.slider-text').addClass('animated fadeInUp');
+							      }, 500);
+							   }
+							
+							});
+							// console.log($('#fh5co-hero .flexslider .slides').attr('class'))
+							// console.log($(window).height())
+							$('#fh5co-hero .flexslider .slides > li').css('height', $(window).height());  
+							$(window).resize(function(){
+							   $('#fh5co-hero .flexslider .slides > li').css('height', $(window).height());  
+							});
+						},
+
+
+					}
+				})
+			});
+		</script>
+		<script src="static/js/custom.js"></script>
+		<!-- 对话框插件 -->
+		<script src="static/js/MiniDialog-es5.min.js"></script>
+	</body>
+	<style>
+		.form-group{
+			margin-bottom: 20px;
+		}
+	</style>
+</html>
